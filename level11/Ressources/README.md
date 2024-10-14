@@ -50,6 +50,7 @@ Example Commands
 1. Using getflag > /tmp/password:
 
     When trying to send this string as a password, the server validates it as a single input. Since it does not match the expected password hash, the server rejects the input and does not execute the command.
+
 2. Using (; getflag > /tmp/flag11) (&& getflag > /tmp/flag11):
 
     By including a semicolon before the command, the server is allowed to execute multiple commands. The shell interprets that it should execute an empty command before the ; and then executes getflag, which allows redirecting the command's output to /tmp/password, effectively creating the flag.
