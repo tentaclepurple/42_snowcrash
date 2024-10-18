@@ -1,4 +1,7 @@
-Here they won't give us a file to look at, but if we run ltrace flag14 we can see something:
+
+
+Here they won't give us a file to look at, but if we run ltrace flag14 we can see something.
+ltrace is a debugging tool used to trace library calls made by a program, along with the system calls and functions from dynamically linked libraries such as libc.
 
     level14@SnowCrash:~$ ltrace /bin/getflag
     __libc_start_main(0x8048946, 1, 0xbffff7f4, 0x8048ed0, 0x8048f40 <unfinished ...>
@@ -6,7 +9,8 @@ Here they won't give us a file to look at, but if we run ltrace flag14 we can se
     puts("You should not reverse this"You should not reverse this
     )         = 28
     +++ exited (status 1) +++
-.
+
+The program uses ptrace() as a defense mechanism against debugging. The call ptrace(PTRACE_TRACEME) allows a process to detect if it’s being traced by a debugger. If the process is already being debugged (as when using ltrace or gdb), the ptrace() call fails, returning -1. In this case, the program detects the tracing and prints the message "You should not reverse this," terminating to prevent further analysis.
 
 Using gdb we can disassemble the code to see what we can do.
 
@@ -42,6 +46,7 @@ We see that in the code they use getenuid to get the id to execute the code.
 First we look at what the UI of flag14 is.
     level14@SnowCrash:~$ id flag14
     uid=3014(flag14) gid=3014(flag14) groups=3014(flag14),1001(flag)
+
 Now that we know it is 3014, we must create a dupuration routine to give us the flag as if we were flag14
 
     Load the Program in gdb: file /bin/getflag
@@ -58,3 +63,5 @@ Now that we know it is 3014, we must create a dupuration routine to give us the 
     Modify the Value of eax: set $eax=3014
     Continue Execution: continue
     Retrieve the Flag: If successful, the program will print the flag.
+
+gdb (GNU Debugger) is a powerful tool used to analyze and control the execution of programs, making it useful for inspecting and modifying a program’s behavior during runtime. In this case, you're using gdb to bypass the security check performed by ptrace() in /bin/getflag, which prevents debugging. By setting a breakpoint on the ptrace() system call and overriding its result (set $eax=0), you trick the program into thinking it's not being debugged. Additionally, modifying the result of the getuid() system call to return 3014 (the UID of flag14) allows you to bypass the permission check and retrieve the flag.
