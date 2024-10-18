@@ -6,6 +6,11 @@ d--x--x--x 1 root    users    340 Aug 30  2015 ..
 -rwsr-sr-x 1 flag13  level13 7303 Aug 30  2015 level13
 -r-x------ 1 level13 level13  675 Apr  3  2012 .profile
 
+And when we execute the executable level13 we get :
+
+    level13@SnowCrash:~$ ./level13 
+    UID 2013 started us but we we expect 4242
+
 The process began by reviewing the level13 program, which was identified as a SUID executable. This means that when executed, it runs with the permissions of the file owner (in this case, flag13).
 
 Compiling the Library:
