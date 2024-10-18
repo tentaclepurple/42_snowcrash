@@ -1,0 +1,13 @@
+## CONFIGUAR EL SSH PARA LA MAQUINA VIRTUAL
+
+    1. Tools -> Nertwork -> Host-only Network -> Create+, creas una red llamada vboxnet0
+
+    2. En la terminal escribes ip a, te saldra una lista de redes de tu PC en una de ellas se llamara vboxnet0, no tendra una ip asignada.
+
+    3. En la VM, en la maquina que has creado, en Setting -> Network -> Adapter 2, añades vboxnet0.
+
+    4. Inicias tu maquina virtual, te dara un error, no te preocupes, cierra, ahora en la termina pon ip a, vboxnet0 tendra un ip asignada
+
+    5. Vamos a  Adapter 1 y en Advanced tiene un triangulo azul, lo clicamos y vamos a Port Forwarding y en Host ip, colocas tu ip de vboxnet0, todo lo demas igual que en la foto.
+
+    
